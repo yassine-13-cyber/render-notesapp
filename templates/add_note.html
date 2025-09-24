@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Note</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+      :root {
+        --bg-dark: #1e1e2f;
+        --card-dark: #2a2a44;
+        --text-light: #f5f5f5;
+        --text-muted: #a0a0a0;
+        --accent-blue: #00bfff;
+        --success-green: #20c997;
+        --danger-red: #ff6347;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        line-height: 1.6;
+        color: var(--text-light);
+        background-color: var(--bg-dark);
+        min-height: 100vh;
+        padding: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--card-dark);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        color: var(--accent-blue);
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+      }
+
+      .form-container {
+        background: var(--bg-dark);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid var(--accent-blue);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-light);
+        font-size: 1.1rem;
+      }
+
+      .form-group input[type="text"],
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-light);
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        background: var(--bg-dark);
+        box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .form-group textarea {
+        height: 200px;
+        resize: vertical;
+        font-family: inherit;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .checkbox-group:hover {
+        border-color: var(--accent-blue);
+        background: var(--bg-dark);
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .checkbox-group label {
+        margin: 0;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-muted);
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+      }
+
+      .btn-secondary {
+        background: var(--bg-dark);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-muted);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .error {
+        color: var(--danger-red);
+        font-size: 0.875rem;
+        margin-top: 5px;
+        padding: 8px;
+        background: rgba(255, 99, 71, 0.2);
+        border-radius: 4px;
+        border: 1px solid var(--danger-red);
+      }
+
+      .form-help {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-top: 5px;
+      }
+
+      .icon {
+        font-size: 1.2rem;
+        margin-right: 8px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 20px;
+        }
+
+        .container {
+          padding: 30px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .form-container {
+          padding: 20px;
+        }
+
+        .form-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>✨ Create New Note</h1>
+        <p>Capture your thoughts and ideas in a beautiful note</p>
+      </div>
+
+      <div class="form-container">
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">
+              <span class="icon">📝</span>Title
+            </label>
+            {{ form.title }} {% if form.title.errors %}
+            <div class="error">{{ form.title.errors }}</div>
+            {% endif %}
+            <div class="form-help">Give your note a descriptive title</div>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.content.id_for_label }}">
+              <span class="icon">📄</span>Content
+            </label>
+            {{ form.content }} {% if form.content.errors %}
+            <div class="error">{{ form.content.errors }}</div>
+            {% endif %}
+            <div class="form-help">
+              Write your note content here. You can use multiple paragraphs.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.tags.id_for_label }}">
+              <span class="icon">🏷️</span>Tags
+            </label>
+            {{ form.tags }} {% if form.tags.errors %}
+            <div class="error">{{ form.tags.errors }}</div>
+            {% endif %}
+            <div class="form-help">
+              Add tags to organize your notes (optional)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              {{ form.active }}
+              <label for="{{ form.active.id_for_label }}">
+                <span class="icon">✅</span>Make this note active
+              </label>
+            </div>
+            {% if form.active.errors %}
+            <div class="error">{{ form.active.errors }}</div>
+            {% endif %}
+            <div class="form-help">
+              Active notes are visible in your notes list
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">💾 Save Note</button>
+            <a href="{% url 'notes_list' %}" class="btn btn-secondary">
+              ← Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ note.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+      :root {
+        --bg-dark: #1e1e2f;
+        --card-dark: #2a2a44;
+        --text-light: #f5f5f5;
+        --text-muted: #a0a0a0;
+        --accent-blue: #00bfff;
+        --danger-red: #ff6347;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        line-height: 1.6;
+        color: var(--text-light);
+        background-color: var(--bg-dark);
+        min-height: 100vh;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-dark);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .header {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      .note-title {
+        color: var(--accent-blue);
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-edit {
+        background: linear-gradient(45deg, #00bfff, #0080ff);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+      }
+
+      .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+      }
+      .btn-danger {
+        background: linear-gradient(45deg, #ff6347, #e64a2f);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 99, 71, 0.3);
+      }
+
+      .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 99, 71, 0.4);
+      }
+      
+      .btn-back {
+        background: var(--bg-dark);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-muted);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .note-content {
+        background: var(--bg-dark);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid var(--accent-blue);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        color: var(--text-light);
+      }
+
+      .note-meta {
+        background: var(--bg-dark);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .note-meta h3 {
+        color: var(--text-light);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .meta-icon {
+        font-size: 1.2rem;
+        margin-right: 10px;
+        width: 25px;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      .meta-label {
+        font-weight: 500;
+        color: var(--text-muted);
+        margin-right: 10px;
+      }
+
+      .meta-value {
+        color: var(--text-light);
+      }
+
+      .tags {
+        display: inline-block;
+        background: rgba(0, 191, 255, 0.2);
+        color: var(--accent-blue);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .active-status {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .active-true {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .active-false {
+        background: linear-gradient(45deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 15px;
+        }
+
+        .note-title {
+          font-size: 1.8rem;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+
+        .meta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 class="note-title">{{ note.title }}</h1>
+        <div class="action-buttons">
+          <a href="{% url 'edit_note' note.id %}" class="btn btn-edit"
+            >✏️ Edit Note</a
+          >
+          <a href="{% url 'notes_list' %}" class="btn btn-back"
+            >← Back to Notes</a
+          >
+          <form action="{% url 'delete_note' note.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="note-content">{{ note.content|linebreaksbr }}</div>
+
+      <div class="note-meta">
+        <h3>📋 Note Information</h3>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span class="meta-label">Created:</span>
+            <span class="meta-value"
+              >{{ note.created_at|date:"F d, Y \a\t g:i A" }}</span
+            >
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-icon">🔄</span>
+            <span class="meta-label">Updated:</span>
+            <span class="meta-value"
+              >{{ note.updated_at|date:"F d, Y \a\t g:i A" }}</span
+            >
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-icon">🎯</span>
+            <span class="meta-label">Status:</span>
+            <span
+              class="active-status {% if note.active %}active-true{% else %}active-false{% endif %}"
+            >
+              {% if note.active %}✅ Active{% else %}❌ Inactive{% endif %}
+            </span>
+          </div>
+
+          {% if note.tags %}
+          <div class="meta-item">
+            <span class="meta-icon">🏷️</span>
+            <span class="meta-label">Tags:</span>
+            <span class="tags">{{ note.tags }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

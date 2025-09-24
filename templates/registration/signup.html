@@ -1,0 +1,90 @@
+<!-- File: register.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register — Notes App</title>
+  <style>
+    :root{--bg:#071032;--card:#081226;--accent:#60a5fa;--muted:#9ca3af}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    body{margin:0;min-height:100vh;background:linear-gradient(180deg,#071032 0%,#071428 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center;padding:24px}
+    .container{width:100%;max-width:520px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:26px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    h1{margin:0 0 6px;font-size:20px}
+    p.lead{margin:0 0 14px;color:var(--muted);font-size:14px}
+    label{display:block;font-size:13px;margin-bottom:6px;color:#cfe9dd}
+    input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit;font-size:14px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#022}
+    .field-help{font-size:12px;color:var(--muted);margin-top:6px}
+    .small{font-size:13px;color:var(--muted)}
+    .logo{width:44px;height:44px;border-radius:9px;background:linear-gradient(90deg,#05203b,#07324b);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);margin-bottom:12px}
+    .errorlist{color:#f87171;font-size:13px;margin:6px 0 0;list-style:none;padding:0}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
+      <div class="logo">N</div>
+      <div>
+        <h1>Create your account</h1>
+        <p class="lead">Create an account to save and sync your notes</p>
+      </div>
+    </div>
+
+    <form action="{% url 'signup' %}" method="POST" novalidate>
+      {% csrf_token %}
+
+      <!-- Display non-field errors -->
+      {{ form.non_field_errors }}
+
+      <div class="grid" style="margin-bottom:12px">
+        <div>
+          <label for="{{ form.first_name.id_for_label }}">First name</label>
+          {{ form.first_name }}
+          {{ form.first_name.errors }}
+        </div>
+        <div>
+          <label for="{{ form.last_name.id_for_label }}">Last name</label>
+          {{ form.last_name }}
+          {{ form.last_name.errors }}
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+        <div class="field-help">We will send a verification email to this address</div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label for="{{ form.password1.id_for_label }}">Password</label>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+        <div class="field-help">Minimum 8 characters</div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label for="{{ form.password2.id_for_label }}">Confirm password</label>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+        <button class="btn btn-primary" type="submit">Create account</button>
+        <a class="btn" href="{% url 'login' %}" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:#cfe9dd;border-radius:10px;padding:8px 12px;text-decoration:none">Already have an account?</a>
+      </div>
+
+      <p class="small" style="margin-top:12px">By creating an account you agree to our <a class="small" href="#">Terms</a>.</p>
+    </form>
+  </main>
+</body>
+</html>

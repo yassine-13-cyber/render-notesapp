@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Verify Your Email</h2>
+    <p>We've sent a verification code to <strong>{{ email }}</strong></p>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Verify Email</button>
+    </form>
+    
+    <p>Didn't receive the code? 
+        <a href="{% url 'resend_verification_code' %}">Resend code</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Note
+from .models import Note,CustomUser
 
-@admin.register(Note)
+@admin.register(Note, site=admin.site)
 class NoteAdmin(admin.ModelAdmin):
     list_display = ['user','title', 'slug', 'active', 'created_at', 'updated_at']
     list_filter = ['active', 'created_at']
